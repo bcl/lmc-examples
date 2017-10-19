@@ -1,0 +1,27 @@
+make-disk-virt requires libvirtd to be setup and running, and it requires a
+RHEL 7.4 boot.iso to be copied to /var/tmp/rhel-7.4-boot.iso.
+
+It needs to have the repository setup in disk.ks
+
+It will make a raw disk image in /var/tmp/lmc-disk-results which can then be
+booted using:
+
+/usr/libexec/qemu-kvm -m 1024 -smp 1 -hda /var/tmp/lmc-disk-results/IMAGENAME
+
+and then connect to it with VNC using vinagre.
+
+
+If you want to make a qcow2 disk image add the --qcow2 argument to the
+livemedia-creator command in the script.
+
+
+make-liveiso requires lorax and anaconda-tui to be installed. It doesn't use
+virt, and doesn't need a boot.iso. It will create a live iso in /var/tmp/lmc-liveiso-results/images/boot.iso
+
+It needs to have the repositories setup in liveiso.ks, and it needs the main
+repo as well as the optional repo for the grub2-efi-*-cdboot package.
+
+This can then be booted with:
+
+/usr/libexec/qemu-kvm -m 1024 -smp 1 -hda /var/tmp/lmc-liveiso/results/images/boot.iso
+
